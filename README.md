@@ -36,3 +36,16 @@ npm install --global eas-cli && eas init --id <YOUR_PROJECT_ID>
 ```bash
 eas build -p android --profile preview
 ```
+
+## Developer Contact
+
+For any queries or suggestions, you can reach out to the developer:
+
+- Name: Hossein Pira
+- Email: h3dev.pira@gmail.com
+- Telegram: [@h3dev](https://t.me/h3dev)
+
+## License
+
+This project is licensed under the MIT License.
+
