@@ -30,3 +30,9 @@ npm install
 ```bash
 npm install --global eas-cli && eas init --id <YOUR_PROJECT_ID>
 ```
+
+5. Build apk
+
+```bash
+eas build -p android --profile preview
+```
