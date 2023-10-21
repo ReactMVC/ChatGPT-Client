@@ -22,3 +22,11 @@ cd ChatGPT-Client
 ```bash
 npm install
 ```
+
+3. Login to [expo.dev](https://expo.dev) and create a new project
+
+4. Add your project id to this project
+
+```bash
+npm install --global eas-cli && eas init --id <YOUR_PROJECT_ID>
+```
