@@ -124,7 +124,6 @@ export default function App() {
         {
           text: 'OK',
           onPress: async () => {
-            controller.abort();
             try {
               await AsyncStorage.removeItem('messages');
               setMessages([]);
@@ -211,8 +210,8 @@ export default function App() {
       textInputStyle={{
         color: isDarkMode ? '#fff' : '#000',
         backgroundColor: isDarkMode ? '#333' : '#f0f0f0',
-        borderRadius: 20,
-        paddingTop: 8.5,
+        paddingTop: 12,
+        paddingBottom: 12,
         paddingHorizontal: 12,
         marginLeft: 0,
       }}
