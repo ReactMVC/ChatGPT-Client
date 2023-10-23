@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, Alert } from 'react-native';
+import { View, Textyy, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Home = ({ navigation }) => {
@@ -16,16 +16,6 @@ const Home = ({ navigation }) => {
             <TouchableOpacity style={styles.button} onPress={() => Alert('Coming Soon', 'This section will be activated soon...')}>
                 <Icon name="image" size={30} color="#000" />
                 <Text style={styles.buttonText}>Image Generation</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button} onPress={() => Linking.openURL('market://details?id=com.chatbot.pira')}>
-                <Icon name="star" size={30} color="#000" />
-                <Text style={styles.buttonText}>Rate App</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.button} onPress={() => Linking.openURL('https://github.com/ReactMVC/ChatGPT-Client')}>
-                <Icon name="github" size={30} color="#000" />
-                <Text style={styles.buttonText}>Github</Text>
             </TouchableOpacity>
 
             <Text style={styles.footer}>Developer: Hossein Pira</Text>
