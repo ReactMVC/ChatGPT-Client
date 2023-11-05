@@ -2,7 +2,7 @@
   "expo": {
     "name": "ChatGPT",
     "slug": "chatgpt",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.chatgpt.pira"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1585630f-848f-4b77-bcb8-8c5f8c041305"
+      }
     }
   }
 }

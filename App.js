@@ -4,6 +4,7 @@ import { GiftedChat, Bubble, Send, Time, InputToolbar, Composer } from 'react-na
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Switch } from 'react-native-paper';
+import axios from 'axios';
 
 export default function App() {
   const [messages, setMessages] = useState([]);
@@ -71,44 +72,50 @@ export default function App() {
     setIsLoading(true);
     setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages));
 
+    const tempMessage = {
+      _id: Math.random().toString(36).substring(7),
+      text: 'Message is sending...',
+      createdAt: new Date().toISOString(),
+      user: {
+        _id: 2,
+        name: 'ChatGPT',
+        avatar: require('./assets/icon.png'),
+      },
+    };
+    setMessages(previousMessages => GiftedChat.append(previousMessages, tempMessage));
+
     try {
-      const response = await fetch('https://chatgpt-api3.onrender.com/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: JSON.stringify({ text: newMessages[0].text }),
+      const response = await axios.post('https://chatgpt-api3.onrender.com/', {
+        text: newMessages[0].text
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        const botResponse = {
-          _id: Math.random().toString(36).substring(7),
-          text: data.message,
-          createdAt: new Date().toISOString(),
-          user: {
-            _id: 2,
-            name: 'ChatGPT',
-          },
-        };
-        setIsLoading(false);
-        setMessages(previousMessages => GiftedChat.append(previousMessages, botResponse));
-      } else {
-        throw new Error('Failed to get response from chatbot');
-      }
+      const data = response.data;
+      const botResponse = {
+        _id: tempMessage._id,
+        text: data.message,
+        createdAt: new Date().toISOString(),
+        user: {
+          _id: 2,
+          name: 'ChatGPT',
+          avatar: require('./assets/icon.png'),
+        },
+      };
+      setIsLoading(false);
+      setMessages(previousMessages => previousMessages.map(msg => msg._id === tempMessage._id ? botResponse : msg));
     } catch (error) {
       setIsLoading(false);
       Alert.alert('Error', error.message);
       const errorMessage = {
-        _id: Math.random().toString(36).substring(7),
+        _id: tempMessage._id,
         text: 'Failed to send message. Please try again.',
         createdAt: new Date().toISOString(),
         user: {
           _id: 2,
           name: 'ChatGPT',
+          avatar: require('./assets/icon.png'),
         },
       };
-      setMessages(previousMessages => GiftedChat.append(previousMessages, errorMessage));
+      setMessages(previousMessages => previousMessages.map(msg => msg._id === tempMessage._id ? errorMessage : msg));
     }
   };
 
@@ -200,6 +207,7 @@ export default function App() {
         backgroundColor: isDarkMode ? '#41444a' : '#fff',
         borderTopColor: isDarkMode ? '#fff' : '#000',
         borderTopWidth: 1,
+        minHeight: 50,
       }}
     />
   );
