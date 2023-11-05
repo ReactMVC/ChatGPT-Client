@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Switch } from 'react-native-paper';
 import axios from 'axios';
+import * as Linking from 'expo-linking';
 
 export default function App() {
   const [messages, setMessages] = useState([]);
@@ -24,6 +25,38 @@ export default function App() {
     storeMessages(messages);
     storeMode(isDarkMode);
   }, [messages, isDarkMode]);
+
+
+  useEffect(() => {
+    const showInitialDialog = async () => {
+      try {
+        const hasOpenedBefore = await AsyncStorage.getItem('hasOpenedBefore');
+        if (hasOpenedBefore === null) {
+          Alert.alert(
+            'Rate the app',
+            'Please rate the app to support us. Also report bugs and issues easily.',
+            [
+              {
+                text: 'Rate app',
+                onPress: () => Linking.openURL('https://myket.ir/app/com.chatgpt.pira'),
+              },
+              {
+                text: 'Cancel',
+                onPress: () => { },
+                style: 'cancel',
+              },
+            ],
+            { cancelable: false }
+          );
+          await AsyncStorage.setItem('hasOpenedBefore', 'true');
+        }
+      } catch (error) {
+        console.error('Failed to show initial dialog', error);
+      }
+    };
+
+    showInitialDialog();
+  }, []);
 
   const retrieveMessages = async () => {
     try {
@@ -79,7 +112,7 @@ export default function App() {
       user: {
         _id: 2,
         name: 'ChatGPT',
-        avatar: require('./assets/icon.png'),
+        avatar: "https://chatbot-app.github.io/static/media/icon.2a8ba17c99b635094f6b.png",
       },
     };
     setMessages(previousMessages => GiftedChat.append(previousMessages, tempMessage));
@@ -97,7 +130,7 @@ export default function App() {
         user: {
           _id: 2,
           name: 'ChatGPT',
-          avatar: require('./assets/icon.png'),
+          avatar: "https://chatbot-app.github.io/static/media/icon.2a8ba17c99b635094f6b.png",
         },
       };
       setIsLoading(false);
@@ -112,7 +145,7 @@ export default function App() {
         user: {
           _id: 2,
           name: 'ChatGPT',
-          avatar: require('./assets/icon.png'),
+          avatar: "https://chatbot-app.github.io/static/media/icon.2a8ba17c99b635094f6b.png",
         },
       };
       setMessages(previousMessages => previousMessages.map(msg => msg._id === tempMessage._id ? errorMessage : msg));
